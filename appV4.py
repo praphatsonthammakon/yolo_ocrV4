@@ -45,7 +45,10 @@ if files:
     
     # โหลดและแปลงภาพ
     image = Image.open(files)
-    image_cv2 = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    image_cv22 = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+
+    # แก้ไขขนาดภาพเป็น 1536 x 2048
+    image_cv2 = cv2.resize(image_cv22, (1536, 2048))
     
 
     # สร้าง placeholder สำหรับการแสดงภาพ
@@ -99,22 +102,22 @@ if files:
         filtered_ocr = [result[1].strip().replace(" ", "") for result in results_ocr if filter_text(result[1].replace(" ", ""))]
 
         # แสดงผลข้อความที่กรองแล้วใน Streamlit
-        with image_placeholder.container():
-            try:
-                if len(filtered_ocr) >= 4:
-                    st.text("หมายเลขบัตรขาว : " + filtered_ocr[0])
-                    st.text("หมายเลขทะเบียน : " + filtered_ocr[1])
-                    st.text("วันที่           : " + filtered_ocr[2])
-                    st.text("เวลา           : " + filtered_ocr[3])
+        # with image_placeholder.container():
+        try:
+            if len(filtered_ocr) >= 4:
+                st.text("หมายเลขบัตรขาว : " + filtered_ocr[0])
+                st.text("หมายเลขทะเบียน : " + filtered_ocr[1])
+                st.text("วันที่           : " + filtered_ocr[2])
+                st.text("เวลา           : " + filtered_ocr[3])
 
-                    progress.progress(100)  # อัปเดต progress bar เป็น 100%
-                    st.success("สามารถอ่านข้อมูลได้ครบถ้วนจากภาพที่อัปโหลด")
+                progress.progress(100)  # อัปเดต progress bar เป็น 100%
+                st.success("สามารถอ่านข้อมูลได้ครบถ้วนจากภาพที่อัปโหลด")
 
-                else:
-                    st.error("ไม่สามารถอ่านข้อมูลได้ครบถ้วนจากภาพที่อัปโหลด")
-
-            except IndexError:
+            else:
                 st.error("ไม่สามารถอ่านข้อมูลได้ครบถ้วนจากภาพที่อัปโหลด")
+
+        except IndexError:
+            st.error("ไม่สามารถอ่านข้อมูลได้ครบถ้วนจากภาพที่อัปโหลด")
  
     else:
         st.error("ไม่สามารถตรวจจับกรอบที่มีค่า confidence สูงสุดได้")  
