@@ -47,8 +47,11 @@ if files:
     image = Image.open(files)
     image_cv22 = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
 
-    # แก้ไขขนาดภาพเป็น 1536 x 2048
-    image_cv2 = cv2.resize(image_cv22, (1536, 2048))
+    # แก้ไขขนาดภาพเป็น 1536 x 2048 กว้าง x ยาว
+    height, width = image_cv22.shape[:2]
+     
+    proportion = width/height 
+    image_cv2 = cv2.resize(image_cv22, (1400, 1400/proportion))
     
 
     # สร้าง placeholder สำหรับการแสดงภาพ
