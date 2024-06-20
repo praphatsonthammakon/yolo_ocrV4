@@ -62,6 +62,8 @@ if files:
     # ปรับขนาดภาพ
     image_cv2 = cv2.resize(image_cv22, (new_width, new_height))
     
+    # หมุนภาพ 90 องศา
+    image_cv2 = cv2.rotate(image_cv2, cv2.ROTATE_90_CLOCKWISE)
 
     # สร้าง placeholder สำหรับการแสดงภาพ
     image_placeholder = st.empty()
