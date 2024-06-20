@@ -47,11 +47,20 @@ if files:
     image = Image.open(files)
     image_cv22 = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
 
-    # แก้ไขขนาดภาพเป็น 1536 x 2048 กว้าง x ยาว
+    # คำนวณความสูงและความกว้างของภาพต้นฉบับ
     height, width = image_cv22.shape[:2]
-     
-    proportion = width/height 
-    image_cv2 = cv2.resize(image_cv22, (1400, 1400/proportion))
+
+    # คำนวณอัตราส่วนของภาพต้นฉบับ
+    proportion = width / height
+
+    # ตั้งค่าความกว้างใหม่ที่ต้องการ
+    new_width = 1400
+
+    # คำนวณความสูงใหม่ให้สัมพันธ์กันตามอัตราส่วน
+    new_height = int(new_width / proportion)
+
+    # ปรับขนาดภาพ
+    image_cv2 = cv2.resize(image_cv22, (new_width, new_height))
     
 
     # สร้าง placeholder สำหรับการแสดงภาพ
